@@ -30,15 +30,15 @@
     "ffmpeg"
   ],
   "license": "MIT",
-  "main": "./lib/index.js",
+  "main": "./index.js",
   "peerDependencies": {
     "gatsby": ">2.0.0"
   },
   "repository": "https://github.com/Mike-Dax/gatsby-remark-videos",
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "babel src --out-dir ./",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir lib",
+    "watch": "babel -w src --out-dir ./",
     "prepublish": "npm run build"
   }
 }
