@@ -1,4 +1,4 @@
-# INFO
+# ⚠️ INFO
 
 I forked this repo to solve the gatsby error “couldn’t find plugin gatsby-remark-videos” by moving the built index.js to the root folder of the repo.
 
