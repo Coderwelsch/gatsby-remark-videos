@@ -1,3 +1,7 @@
+# INFO
+
+I forked this repo to solve the gatsby error “couldn’t find plugin gatsby-remark-videos” by moving the built index.js to the root folder of the repo.
+
 # gatsby-remark-videos
 
 The intent of this plugin is to aid in the embedding of looping 'html5 gifv'
