@@ -2,6 +2,7 @@ const select = require(`unist-util-select`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
+const url =c require(`url`)
 
 const Promise = require(`bluebird`)
 const slash = require(`slash`)
@@ -41,10 +42,16 @@ module.exports = (
 
   // This will only work for markdown syntax image tags
   const markdownVideoNodes = select(markdownAST, `image`)
+  
+  // generates video properties from url parameters
+  const generateProps = propParams => 
+    Object.keys(propParams)
+      .map(key => `${key}="${propParams[key]}"`)
+      .join(" ")
 
   // Takes a node and generates the needed videos and then returns
   // the needed HTML replacement for the video
-  const generateVideosAndUpdateNode = async function(node, resolve) {
+  const generateVideosAndUpdateNode = async function(node, tagParams, resolve) {
     // Check if this markdownNode has a File parent. This plugin
     // won't work if the video isn't hosted locally.
     const parentNode = getNode(markdownNode.parent)
@@ -73,7 +80,7 @@ module.exports = (
     })
 
     // Calculate the paddingBottom %
-
+    
     const sourceTags = transcodeResult.videos.map(video => {
       return `<source src="${video.src}" type="video/${video.fileExtension}">`
     })
@@ -103,9 +110,10 @@ module.exports = (
       wrapperAspectStyle = `position: relative; display: block; padding-top: ${ratio};`
       videoAspectStyle = `position: absolute; top: 0; left: 0; width: 100%; height: auto;`
     }
-
+    
+    const propsStr = Object.keys(tagParams).length ? `${generateProps(tagParams)} ` : ``
     const videoTag = `
-    <video autoplay loop preload style="${videoAspectStyle}" >
+    <video ${ propsStr }preload style="${videoAspectStyle}" >
       ${sourceTags.join('')}
     </video>
     `
@@ -125,10 +133,11 @@ module.exports = (
     markdownVideoNodes.map(
       node =>
         new Promise(async (resolve, reject) => {
-          const fileType = node.url.split('.').pop()
-
-          if (isRelativeUrl(node.url) && allowedFiletypes.includes(fileType)) {
-            const rawHTML = await generateVideosAndUpdateNode(node, resolve)
+          const parsedUrl = url.parse(node.url, true)
+          const fileExt = path.extname(parsedUrl.pathname).substr(1)
+                    
+          if (isRelativeUrl(node.url) && allowedFiletypes.includes(fileExt)) {
+            const rawHTML = await generateVideosAndUpdateNode(node, parsedUrl.query, resolve)
 
             if (rawHTML) {
               // Replace the video node with an inline HTML node.
