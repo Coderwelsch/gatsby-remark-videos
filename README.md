@@ -1,6 +1,6 @@
 # ⚠️ INFO
 
-I forked this repo to solve the gatsby error “couldn’t find plugin gatsby-remark-videos” by moving the built index.js to the root folder of the repo.
+I forked this repo to solve the gatsby error “couldn’t find plugin gatsby-remark-videos” by moving the built index.js to the root folder of the repo. In version 0.3.6 I’ve also added url options for the generated video tags.
 
 # gatsby-remark-videos
 
@@ -87,7 +87,25 @@ Video one:
 Creates roughly this:
 
 ```html
-<video autoplay loop>
+<video preload>
+  <source src="/static/video-hash-optshash.webm" type="video/webm" />
+  <source src="/static/video-hash-optshash.mp4" type="video/mp4" />
+</video>
+```
+
+### Video Url Options
+
+You now can use url parameters to set custom video attributes like loop, muted, autoplay etc:
+
+```
+Video one:
+![](video.avi?autoplay=true&muted=true&loop=true)
+```
+
+Creates this:
+
+```html
+<video autoplay="true" muted="true" loop="true">
   <source src="/static/video-hash-optshash.webm" type="video/webm" />
   <source src="/static/video-hash-optshash.mp4" type="video/mp4" />
 </video>
