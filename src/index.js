@@ -137,7 +137,7 @@ module.exports = (
           const fileExt = path.extname(parsedUrl.pathname).substr(1)
                     
           if (isRelativeUrl(node.url) && allowedFiletypes.includes(fileExt)) {
-            const rawHTML = await generateVideosAndUpdateNode(parsedUrl.path, parsedUrl.query, resolve)
+            const rawHTML = await generateVideosAndUpdateNode(parsedUrl.pathname, parsedUrl.query, resolve)
 
             if (rawHTML) {
               // Replace the video node with an inline HTML node.
