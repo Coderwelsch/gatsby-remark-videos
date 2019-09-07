@@ -51,13 +51,13 @@ module.exports = (
 
   // Takes a node and generates the needed videos and then returns
   // the needed HTML replacement for the video
-  const generateVideosAndUpdateNode = async function(node, tagParams, resolve) {
+  const generateVideosAndUpdateNode = async function(url, tagParams, resolve) {
     // Check if this markdownNode has a File parent. This plugin
     // won't work if the video isn't hosted locally.
     const parentNode = getNode(markdownNode.parent)
     let videoPath
     if (parentNode && parentNode.dir) {
-      videoPath = slash(path.join(parentNode.dir, node.url))
+      videoPath = slash(path.join(parentNode.dir, url))
     } else {
       return null
     }
@@ -137,7 +137,7 @@ module.exports = (
           const fileExt = path.extname(parsedUrl.pathname).substr(1)
                     
           if (isRelativeUrl(node.url) && allowedFiletypes.includes(fileExt)) {
-            const rawHTML = await generateVideosAndUpdateNode(node, parsedUrl.query, resolve)
+            const rawHTML = await generateVideosAndUpdateNode(parsedUrl.path, parsedUrl.query, resolve)
 
             if (rawHTML) {
               // Replace the video node with an inline HTML node.
