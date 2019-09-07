@@ -2,7 +2,7 @@ const select = require(`unist-util-select`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const url =c require(`url`)
+const url = require(`url`)
 
 const Promise = require(`bluebird`)
 const slash = require(`slash`)
