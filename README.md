@@ -9,7 +9,13 @@ like videos from markdown.
 
 ## Install
 
-`npm install --save gatsby-remark-videos gatsby-plugin-ffmpeg`
+```bash
+npm install --save https://github.com/Coderwelsch/gatsby-remark-videos.git gatsby-plugin-ffmpeg
+```
+or
+```bash
+yarn install https://github.com/Coderwelsch/gatsby-remark-videos.git
+```
 
 This package is dependent on gatsby-plugin-ffmpeg which has the requirement of ffmpeg installed. Please follow the instructions at https://github.com/Mike-Dax/gatsby-plugin-ffmpeg to install the required dependencies.
 
